@@ -1,0 +1,54 @@
+# İşletim Sistemi dosyaları
+*.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+.checkstyle
+
+# VS Code 
+.vscode/
+
+# Gradle / Build dosyaları
+.gradle/
+build/
+*/build/
+*/*/build/
+captures/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Lokal Konfigürasyonlar ve Sırlar (Şifreler, key'ler)
+local.properties
+*.jks
+*.keystore
+*keystore.properties
+*key.properties
+
+# Log dosyaları
+*.log
+
+# C/C++ (NDK kullanırsan)
+.cxx/
+
+# Compose
+*.kt.txt
+
+# Java / Kotlin Çıktıları ve Çeşitli
+/out/
+/bin/
+*.class
+*.apk
+*.ap_
+*.aab
+*.dex
