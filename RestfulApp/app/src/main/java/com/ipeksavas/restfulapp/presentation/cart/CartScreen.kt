@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +35,9 @@ fun CartScreen(
 
     val currentDateTime = remember { DateUtils.getCurrentDateTime() }
 
-    Column(modifier = Modifier.fillMaxSize().padding(12.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(12.dp)) {
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -148,21 +151,33 @@ fun CartScreen(
                         }
                     }
                 }
-
-                Text(
-                    text = "Toplam: ${"%.2f".format(state.totalAmount)} TL",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.ExtraBold
-                )
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween){
+                    Text(
+                        text = "Toplam: ${"%.2f".format(state.totalAmount)} TL",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.ExtraBold,
+                    )
+                    OutlinedButton(
+                        onClick = { viewModel.clearCart() } ,
+                        shape = shapes.small,
+                        modifier = Modifier.height(36.dp)
+                    ){ Text("Sepeti boşalt")}
+                }
             }
         }
 
         state.paymentSuccessMessage?.let { message ->
             Surface(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
                 color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.medium,
+                shape = shapes.medium,
                 shadowElevation = 2.dp
             ) {
                 Text(
@@ -177,9 +192,11 @@ fun CartScreen(
         }
         state.errorMessage?.let { error ->
             Surface(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
                 color = MaterialTheme.colorScheme.errorContainer,
-                shape = MaterialTheme.shapes.medium
+                shape = shapes.medium
             ) {
                 Text(
                     text = "⚠️ $error",
@@ -192,7 +209,9 @@ fun CartScreen(
             }
         }
 
-        Column(modifier = Modifier.fillMaxWidth().padding(top = 4.dp)) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -201,14 +220,14 @@ fun CartScreen(
                     onClick = { viewModel.initiatePayment(isCreditCard = false) },
                     enabled = state.cartItems.isNotEmpty() && !state.isLoading,
                     modifier = Modifier.weight(1f),
-                    shape = MaterialTheme.shapes.small
+                    shape = shapes.small
                 ) { Text("Nakit") }
 
                 Button(
                     onClick = { viewModel.initiatePayment(isCreditCard = true) },
                     enabled = state.cartItems.isNotEmpty() && !state.isLoading,
                     modifier = Modifier.weight(1f),
-                    shape = MaterialTheme.shapes.small
+                    shape = shapes.small
                 ) { Text("Kredi Kartı") }
             }
 
@@ -217,7 +236,7 @@ fun CartScreen(
             OutlinedButton(
                 onClick = onNavigateToTransactions,
                 modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.small
+                shape = shapes.small
             ) { Text("İşlemler (Transactions)") }
         }
     }
@@ -266,7 +285,9 @@ fun ProductCard(
             OutlinedTextField(
                 value = quantityText,
                 onValueChange = { if (it.all { char -> char.isDigit() }) quantityText = it },
-                modifier = Modifier.fillMaxWidth().height(56.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
                 label = { Text("Miktar", fontSize = 11.sp) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -285,7 +306,7 @@ fun ProductCard(
                         onRemoveClick(q)
                     },
                     modifier = Modifier.weight(1f),
-                    shape = MaterialTheme.shapes.extraSmall,
+                    shape = shapes.extraSmall,
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
                     Text("Çıkar", fontSize = 11.sp)
@@ -297,7 +318,7 @@ fun ProductCard(
                         onAddClick(q)
                     },
                     modifier = Modifier.weight(1f),
-                    shape = MaterialTheme.shapes.extraSmall
+                    shape = shapes.extraSmall
                 ) {
                     Text("Ekle", fontSize = 11.sp)
                 }
