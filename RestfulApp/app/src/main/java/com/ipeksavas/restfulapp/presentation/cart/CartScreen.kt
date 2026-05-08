@@ -1,5 +1,6 @@
 package com.ipeksavas.restfulapp.presentation.cart
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -7,6 +8,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -98,10 +101,51 @@ fun CartScreen(
                 LazyColumn(modifier = Modifier.weight(1f)) {
                     items(state.cartItems) { item ->
                         val lineTotal = item.price * item.quantity
-                        Text(
-                            text = "${item.name} x ${item.quantity} = ${"%.2f".format(lineTotal)} TL",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                        Column {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                            ) {
+                                Text(
+                                    text = "${item.name} x ${item.quantity} = ${
+                                        "%.2f".format(
+                                            lineTotal
+                                        )
+                                    } TL",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.clickable {
+                                        val product = Product(
+                                            productId = item.productId,
+                                            name = item.name,
+                                            price = item.price,
+                                            departmentId = item.departmentId,
+                                            departmentName = item.departmentName
+                                        )
+                                        viewModel.removeFromCart(product, item.quantity)
+                                    }
+                                )
+                                IconButton(
+                                    onClick = {
+                                        val product = Product(
+                                            productId = item.productId,
+                                            name = item.name,
+                                            price = item.price,
+                                            departmentId = item.departmentId,
+                                            departmentName = item.departmentName
+                                        )
+                                        viewModel.removeFromCart(product, item.quantity)
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = "Ürünü sepetten çıkar",
+                                        tint = MaterialTheme.colorScheme.error
+                                    )
+                                }
+                            }
+                            HorizontalDivider(thickness = 0.5.dp)
+                        }
                     }
                 }
 
