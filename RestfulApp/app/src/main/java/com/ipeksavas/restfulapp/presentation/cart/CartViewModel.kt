@@ -69,6 +69,17 @@ class CartViewModel(
     fun clearCart(){
         _uiState.value = _uiState.value.copy(cartItems = emptyList())
     }
+    
+    fun createProduct(saleItem: SaleItem): Product{
+        val product = Product(
+            productId = saleItem.productId,
+            name = saleItem.name,
+            price = saleItem.price,
+            departmentId = saleItem.departmentId,
+            departmentName = saleItem.departmentName
+        )
+         return product
+    }
 
     private fun recalculateTotal(items: List<SaleItem>) {
         val newTotal = items.sumOf { it.price * it.quantity }

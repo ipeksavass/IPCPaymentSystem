@@ -118,25 +118,13 @@ fun CartScreen(
                                     } TL",
                                     style = MaterialTheme.typography.bodyMedium,
                                     modifier = Modifier.clickable {
-                                        val product = Product(
-                                            productId = item.productId,
-                                            name = item.name,
-                                            price = item.price,
-                                            departmentId = item.departmentId,
-                                            departmentName = item.departmentName
-                                        )
+                                        val product = viewModel.createProduct(item)
                                         viewModel.removeFromCart(product, item.quantity)
                                     }
                                 )
                                 IconButton(
                                     onClick = {
-                                        val product = Product(
-                                            productId = item.productId,
-                                            name = item.name,
-                                            price = item.price,
-                                            departmentId = item.departmentId,
-                                            departmentName = item.departmentName
-                                        )
+                                        val product = viewModel.createProduct(item)
                                         viewModel.removeFromCart(product, item.quantity)
                                     }
                                 ) {
