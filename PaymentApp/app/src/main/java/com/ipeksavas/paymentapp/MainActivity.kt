@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.ipeksavas.paymentapp.ipc.AdminIpcClient
 import com.ipeksavas.paymentapp.presentation.PaymentScreen
 import com.ipeksavas.paymentapp.presentation.PaymentViewModel
-import kotlin.jvm.java
 
 class MainActivity : ComponentActivity() {
 
@@ -40,8 +39,12 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     PaymentScreen(amount = amount) {
-                        viewModel.approvePayment(receiptId) {
-                            Toast.makeText(this, "Ödeme Onaylandı!", Toast.LENGTH_SHORT).show()
+                        viewModel.approvePayment(receiptId) { isSuccess ->
+                            if (isSuccess) {
+                                Toast.makeText(this@MainActivity, "Ödeme Onaylandı!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this@MainActivity, "Hata Oluştu!", Toast.LENGTH_SHORT).show()
+                            }
                             finish()
                         }
                     }
